@@ -24,7 +24,8 @@
       "mongodb" : "> 1.1.10",
       "express": "> 4.0.0",
       "mongoose": "> 3.6.13",
-      "body-parser": ">= 1.0.1" 
+      "body-parser": ">= 1.0.1",
+      "bson": ">= 0.2.16"
   },
 
   "devDependencies": {},
