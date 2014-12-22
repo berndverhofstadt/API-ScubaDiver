@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Api-scubadiver by berndverhofstadt</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Api-scubadiver</h1>
+          <h2>RESTful API with Node.JS, Express and MongoDB for Openshift</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/berndverhofstadt/API-ScubaDiver/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/berndverhofstadt/API-ScubaDiver/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/berndverhofstadt/API-ScubaDiver" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h2>
+<a id="api---scubadiver" class="anchor" href="#api---scubadiver" aria-hidden="true"><span class="octicon octicon-link"></span></a>API - ScubaDiver</h2>
+
+<h1>
+<a id="simple-nodejs-express-and-mongo-example-for-openshift" class="anchor" href="#simple-nodejs-express-and-mongo-example-for-openshift" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple Node.JS, Express, and Mongo example for OpenShift</h1>
+
+<p>This is a simple Node.JS example that uses Express and has mongodb set up. It is all wired to go in OpenShift.
+I would not recommend using this for a more complicated application, as there should be more seperation into different files for different logic.</p>
+
+<h2>
+<a id="running-on-openshift" class="anchor" href="#running-on-openshift" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running on OpenShift</h2>
+
+<p>Assuming you already have an OpenShift account</p>
+
+<p>1) Create a Node.JS application and add a mongoDB cartridge</p>
+
+<pre><code>rhc app create &lt;your app name&gt; nodejs-0.10 mongodb-2 
+</code></pre>
+
+<p>2) Clone repository to edit on your local device.</p>
+
+<pre><code>git clone &lt;link to repo&gt;
+</code></pre>
+
+<p>3) Push changes to the remote git. </p>
+
+<blockquote>
+<p>Every push will be build automatically (standard on OpenShift small gear). When the build failed you'll get an error <code>503 Service Temporarily Unavailable</code></p>
+</blockquote>
+
+<h2>
+<a id="engines" class="anchor" href="#engines" aria-hidden="true"><span class="octicon octicon-link"></span></a>Engines</h2>
+
+<p><img src="https://img.shields.io/npm/v/npm.svg" alt="npm version"> <img src="https://img.shields.io/node/v/gh-badges.svg" alt="node.js version"></p>
+
+<p><code>npm</code> is the package manager for javascript, and is default for Node.js. npm is bundled and installed automatically with the environment. npm runs through the command line and manages dependencies for an application.</p>
+
+<h2>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<p>To get the dependencies include the following in your <code>package.json</code> file.</p>
+
+<pre><code>"dependencies": {
+      "mongodb" : "&gt; 1.1.10",
+      "express": "&gt; 4.0.0",
+      "mongoose": "&gt; 3.6.13",
+      "body-parser": "&gt;= 1.0.1",
+      "bson": "&gt;= 0.2.16" 
+},
+</code></pre>
+
+<p>After adding this run the command within your project</p>
+
+<pre><code>npm install
+</code></pre>
+
+<p>All the packages will be include in the <code>node_modules</code> folder</p>
+
+<h2>
+<a id="environment-variables" class="anchor" href="#environment-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Environment Variables</h2>
+
+<p>The <strong>Node.JS cartridge</strong> provides several environment variables to reference for ease of use:</p>
+
+<pre><code>OPENSHIFT_NODEJS_IP
+The IP address used to bind Node.js
+
+OPENSHIFT_NODEJS_PORT 
+The Node.js listening port
+
+OPENSHIFT_NODEJS_POLL_INTERVAL 
+May be set as a user environment variable to change the default of 1s
+</code></pre>
+
+<p>The <strong>mongodb cartridge</strong> provides several environment variables to reference for ease of use:</p>
+
+<pre><code>OPENSHIFT_MONGODB_DB_HOST 
+The MongoDB IP address
+
+OPENSHIFT_MONGODB_DB_PORT 
+The MongoDB port 
+
+OPENSHIFT_MONGODB_DB_USERNAME 
+The MongoDB username
+
+OPENSHIFT_MONGODB_DB_PASSWORD 
+The MongoDB password
+
+OPENSHIFT_MONGODB_DB_URL 
+The MongoDB connection URL 
+(e.g. `mongodb://&lt;username&gt;:&lt;password&gt;@&lt;hostname&gt;:&lt;port&gt;/&lt;table&gt;`)
+
+OPENSHIFT_MONGODB_DB_LOG_DIR 
+The path to the MongoDB log directory
+</code></pre>
+
+<h2>
+<a id="repo-layout" class="anchor" href="#repo-layout" aria-hidden="true"><span class="octicon octicon-link"></span></a>Repo Layout</h2>
+
+<pre><code>.openshift/                 - Location for OpenShift specific files.
+.openshift/action_hooks/    - Entry points into various application and
+                              platform lifecycle operations.
+.openshift/cron/            - Scripts or jobs to be run on a periodic basis.
+.openshift/markers/         - Marker files, eg. hot_deploy enabling hot
+                              deploy feature.
+node_modules/               - Any node modules packaged with the app.
+README.md                   - This file.
+deplist.txt                 - Deprecated.
+index.html                  - Default OpenShift page seen when you open your
+                              app in a web browser.
+package.json                - npm package descriptor.
+server.js                   - Main application file, where the whole logic
+                              is placed.
+</code></pre>
+
+<h2>
+<a id="bibliography" class="anchor" href="#bibliography" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bibliography</h2>
+
+<ul>
+<li><a href="http://scotch.io/tutorials/build-a-restful-api-using-node-and-express-4">Build a RESTful API Using Node and Express 4</a></li>
+<li><a href="http://scotch.io/bar-talk/designing-a-restful-web-api">Designing a RESTful Web API</a></li>
+<li><a href="http://mongoosejs.com/docs/guide.html">Mongoose Schemas</a></li>
+<li><a href="http://www.openshift.org/documentation/oo_cartridge_guide.html">OpenShift Origin Cartridge Guide</a></li>
+</ul>
+
+<h2>
+<a id="license-" class="anchor" href="#license-" aria-hidden="true"><span class="octicon octicon-link"></span></a>License <img src="https://img.shields.io/npm/l/express.svg" alt="MIT License">
+</h2>
+        </section>
+
+        <footer>
+          Api-scubadiver is maintained by <a href="https://github.com/berndverhofstadt">berndverhofstadt</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
