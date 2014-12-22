@@ -1,6 +1,6 @@
 
-API - ScubaDiver
-----------------
+API - ScubaDiver.be
+-------------------
 
 Simple Node.JS, Express, and Mongo example for OpenShift
 =========================================================
@@ -14,7 +14,7 @@ Running on OpenShift
 
 Assuming you already have an OpenShift account
 
-1) Create a Node.JS application and add a mongoDB cartridge
+1) Create a Node.JS application and add a mongoDB cartridge on Openshift
 
 	rhc app create <your app name> nodejs-0.10 mongodb-2 
 
